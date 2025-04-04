@@ -13,4 +13,5 @@ type Services interface {
 	GetUserByID(ctx context.Context, id string) (user dto.User, err error)
 	GetUserTransactions(ctx context.Context, userID string) (transactions []dto.Transaction, err error)
 	CreateAuditLogs(ctx context.Context, auditLog dto.AuditLog) error
+	GetUserByEmail(ctx context.Context, email string) (user dto.User, err error)
 }

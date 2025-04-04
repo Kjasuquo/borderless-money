@@ -26,6 +26,15 @@ func (d *database) GetUserByID(ctx context.Context, id string) (user model.User,
 	return
 }
 
+func (d *database) GetUserByEmail(ctx context.Context, email string) (user model.User, err error) {
+	err = d.db.WithContext(ctx).
+		Where("email = ?", email).
+		Preload("Wallets").
+		First(&user).Error
+
+	return
+}
+
 func (d *database) CreateUserWallet(ctx context.Context, email string) (string, error) {
 
 	tx := d.db.Begin()

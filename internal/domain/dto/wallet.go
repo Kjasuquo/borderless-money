@@ -24,9 +24,9 @@ func IsValidCurrency(currency string) bool {
 }
 
 type TransferRequest struct {
-	FromCurrency string  `json:"from_currency" binding:"required"`
-	ToCurrency   string  `json:"to_currency" binding:"required"`
-	FromAmount   float64 `json:"from_amount"`
-	ToAmount     float64 `json:"to_amount"`
-	ToUserID     string  `json:"to_user_id"`
+	FromCurrency  string  `json:"from_currency" binding:"required"`
+	ToCurrency    string  `json:"to_currency" binding:"required"`
+	FromAmount    float64 `json:"from_amount"`
+	ToAmount      float64 `json:"to_amount"`
+	ReceiverEmail string  `json:"receiver_email"`
 }

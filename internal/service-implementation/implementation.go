@@ -95,3 +95,14 @@ func (s *ServiceClient) CreateAuditLogs(ctx context.Context, auditLog dto.AuditL
 	}
 	return nil
 }
+
+func (s *ServiceClient) GetUserByEmail(ctx context.Context, email string) (user dto.User, err error) {
+	modelUser, err := s.repository.GetUserByEmail(ctx, email)
+	if err != nil {
+		return dto.User{}, err
+	}
+
+	user = modelUser.ToUserDTO()
+
+	return user, nil
+}

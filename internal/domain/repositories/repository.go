@@ -14,4 +14,5 @@ type Repository interface {
 	Transfer(ctx context.Context, trx *model.Transaction) (string, error)
 	GetUserTransactions(ctx context.Context, userID string) (transaction []model.Transaction, err error)
 	CreateAuditLogs(ctx context.Context, auditLog model.AuditLog) error
+	GetUserByEmail(ctx context.Context, email string) (user model.User, err error)
 }

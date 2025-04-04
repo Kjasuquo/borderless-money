@@ -28,11 +28,19 @@ func (h *Handler) CreateWallet() gin.HandlerFunc {
 			ctx.JSON(http.StatusBadRequest, gin.H{"message": fmt.Sprintf("invalid email format err: %v", err)})
 			return
 		}
-		userID, err := h.Wallet.CreateWallet(ctx, request.Email)
+
+		var userID string
+
+		user, err := h.Wallet.GetUserByEmail(ctx, strings.TrimSpace(request.Email))
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{"message": fmt.Sprintf("failed to create wallet: %v", err)})
-			return
+			userID, err = h.Wallet.CreateWallet(ctx, strings.TrimSpace(request.Email))
+			if err != nil {
+				ctx.JSON(http.StatusInternalServerError, gin.H{"message": fmt.Sprintf("failed to create wallet: %v", err)})
+				return
+			}
 		}
+
+		userID = user.ID
 
 		go h.AuditLogs(ctx, userID, userAgent, ip)
 
@@ -178,7 +186,7 @@ func (h *Handler) Transfer() gin.HandlerFunc {
 			return
 		}
 
-		_, err := h.Wallet.GetUserWalletByCurrency(ctx, request.ToUserID, request.ToCurrency)
+		receiver, err := h.Wallet.GetUserByEmail(ctx, strings.TrimSpace(request.ReceiverEmail))
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"message": fmt.Sprintf("failed to fetch receiver wallet err: %v", err)})
 			return
@@ -222,7 +230,7 @@ func (h *Handler) Transfer() gin.HandlerFunc {
 
 		trxID, err := h.Wallet.Transfer(ctx, dto.Transaction{
 			SenderID:       userID,
-			ReceiverID:     request.ToUserID,
+			ReceiverID:     receiver.ID,
 			FromAmount:     fromAmount,
 			ToAmount:       toAmount,
 			FromCurrency:   request.FromCurrency,
