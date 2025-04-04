@@ -38,9 +38,9 @@ func (h *Handler) CreateWallet() gin.HandlerFunc {
 				ctx.JSON(http.StatusInternalServerError, gin.H{"message": fmt.Sprintf("failed to create wallet: %v", err)})
 				return
 			}
+		} else {
+			userID = user.ID
 		}
-
-		userID = user.ID
 
 		go h.AuditLogs(ctx, userID, userAgent, ip)
 
