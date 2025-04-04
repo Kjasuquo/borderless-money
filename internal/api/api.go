@@ -3,15 +3,17 @@ package api
 import (
 	"context"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"strings"
+	"time"
+
+	"github.com/gin-gonic/gin"
+
 	"operation-borderless/internal/domain/dto"
 	"operation-borderless/internal/domain/services"
 	"operation-borderless/pkg/config"
 	"operation-borderless/pkg/util"
-	"strings"
-	"time"
 )
 
 type Handler struct {
