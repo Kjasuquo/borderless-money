@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: operation-borderless-conf
+  namespace: operation-borderless
+data:
+ # Database Credentials
+ DB_NAME: "postgres"
+ DB_HOST: "10.73.240.3"
+ DB_PORT: "5432"
+
+ FOREX_API_URL: "https://v6.exchangerate-api.com/v6/"

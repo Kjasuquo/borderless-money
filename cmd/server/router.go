@@ -1,0 +1,37 @@
+package server
+
+import (
+	"github.com/gin-gonic/gin"
+	"log"
+	"operation-borderless/internal/api"
+)
+
+func DefineRoutes(handler *api.Handler) *gin.Engine {
+	log.Println("Routes defined")
+
+	router := gin.Default()
+
+	{
+		router.GET("/", handler.Home())
+	}
+
+	r := router.Group("/api/v1")
+
+	{
+		r.POST("/create-wallet", handler.CreateWallet())
+		r.POST("/deposit/:userID", handler.Deposit())
+		r.POST("/convert/:userID", handler.Swap())
+		r.POST("/transfer/:userID", handler.Transfer())
+		r.GET("/wallet/:userID", handler.GetUserWallets())
+		r.GET("transactions/:userID", handler.GetUserTransactions())
+	}
+
+	return router
+}
+
+func SetupRouter(h *api.Handler) *gin.Engine {
+	log.Println("Router setup")
+	r := DefineRoutes(h)
+
+	return r
+}

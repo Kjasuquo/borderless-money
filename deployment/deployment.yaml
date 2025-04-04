@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: operation-borderless-deployment
+  namespace: operation-borderless
+  labels:
+    app: operation-borderless
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: operation-borderless
+  template:
+    metadata:
+      labels:
+        app: operation-borderless
+    spec:
+      containers:
+        - name: operation-borderless
+          image: europe-west1-docker.pkg.dev/borderless-money-455715/project-repo/operation-borderless:v2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            # Database credentials
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: operation-borderless-secret
+                  key: DB_USER
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: operation-borderless-secret
+                  key: DB_PASSWORD
+
+            - name: FOREX_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: operation-borderless-secret
+                  key: FOREX_API_KEY
+
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: operation-borderless-conf
+                  key: DB_NAME
+
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: operation-borderless-conf
+                  key: DB_HOST
+
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: operation-borderless-conf
+                  key: DB_PORT
+
+            - name: FOREX_API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: operation-borderless-conf
+                  key: FOREX_API_URL
+
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"

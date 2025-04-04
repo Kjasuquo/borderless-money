@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: operation-borderless-service
+  namespace: operation-borderless
+spec:
+  selector:
+    app: operation-borderless
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer

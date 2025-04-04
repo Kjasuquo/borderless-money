@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: operation-borderless-ingress
+  namespace: operation-borderless
+  annotations:
+    kubernetes.io/ingress.class: "nginx" # Or "gce" for GKE’s ingress
+spec:
+  rules:
+    - host: "app.borderless-money.com" # Replace with your domain
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: operation-borderless-service
+                port:
+                  number: 80
+  # Optional: Add TLS
+  # tls:
+  # - hosts:
+  #   - app.borderless-money.com
+  #   secretName: borderless-tls-secret
