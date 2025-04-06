@@ -4,6 +4,7 @@ This is a FinTech App that mimics some of the key features of how a real FinTech
 ## Tech Stack Used
 - Golang (Backend)
 - React (Frontend)
+- Postgres (Database) 
 
 ## Features Walk Through
 No authentication was done. Anybody with a valid email can create a wallet or use the app. 

@@ -10,7 +10,6 @@ node_modules
 /tmp
 /postgres-data
 
-docker-compose.yml
 
 mock/
 

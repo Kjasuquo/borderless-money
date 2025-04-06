@@ -111,7 +111,7 @@ func (h *Handler) Swap() gin.HandlerFunc {
 			return
 		}
 
-		exchangeRate := 0.1
+		exchangeRate := 1.0
 
 		if request.FromCurrency != request.ToCurrency {
 			fromCurrency := strings.TrimPrefix(request.FromCurrency, "c")
