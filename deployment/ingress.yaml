@@ -1,13 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: operation-borderless-ingress
+  name: operation-borderless-backend-ingress
   namespace: operation-borderless
   annotations:
-    kubernetes.io/ingress.class: "nginx" # Or "gce" for GKE’s ingress
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - backend-borderless-money.xyz
+      secretName: backend-borderless-cert-tls
   rules:
-    - host: "app.borderless-money.com" # Replace with your domain
+    - host: backend-borderless-money.xyz
       http:
         paths:
           - path: /
@@ -17,8 +23,3 @@ spec:
                 name: operation-borderless-service
                 port:
                   number: 80
-  # Optional: Add TLS
-  # tls:
-  # - hosts:
-  #   - app.borderless-money.com
-  #   secretName: borderless-tls-secret
