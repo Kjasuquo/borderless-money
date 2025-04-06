@@ -54,7 +54,7 @@ for MacOS run
 This was implemented using React.js
 
 ### Deployment
-The was done on GCP kubernetes cluster. And `https://borderless-money.xyz/create-wallet` was acquired from namecheap inorder to secure it with https and connect to the backend https
+The was done on GCP kubernetes cluster. And `https://borderless-money.xyz/` was acquired from namecheap inorder to secure it with https and connect to the backend https
 
 ### Starting Frontend Locally
 - npm install
